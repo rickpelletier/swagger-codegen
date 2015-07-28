@@ -1,0 +1,65 @@
+<?php
+/**
+ * Swagger Generated Routes
+ *
+ * PHP version 5
+ *
+ * @category Class
+ * @package  {{invokerPackage}}
+ * @author   Display Name <richard.p@irokopartners.com>
+ * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache
+ * @link     https://github.com/swagger-api/swagger-codegen
+ *---------------------------------------------------------------------------
+ *| Application Routes
+ *|--------------------------------------------------------------------------
+ *|
+ *| Here is where you can register all of the routes for an application.
+ *| It is a breeze. Simply tell Lumen the URIs it should respond to
+ *| and give it the Closure to call when that URI is requested.
+ *|
+ */
+
+/**
+ * Registers a consistent list of routes for the specific resource
+ *
+ * @param string $path       Restful route path
+ * @param string $controller Controller classname
+ *
+ * @return mixed
+ */
+function rest($app, $path, $controller)
+{
+    $app->get($path, $controller.'@index');
+    $app->post($path, $controller.'@store');
+    
+    $app->get($path.'/{id}', $controller.'@show');
+    $app->put($path.'/{id}', $controller.'@update');
+    $app->delete($path.'/{id}', $controller.'@destroy');
+}{{#apiInfo}}
+    {{#apis}}
+        {{#operations}}
+{{#operation}}/**
+ * {{description}}
+ */
+$app->{{httpMethod}}(
+    '{{path}}', 
+    function ({{#pathParams}}\Illuminate\Http\Request $request, ${{paramName}}{{#hasMore}}, {{/hasMore}}{{/pathParams}}{{^pathParams}}\Illuminate\Http\Request $request{{/pathParams}}) use ($app) {   
+        {{#queryParams}}${{paramName}} = $request->get("{{paramName}}");{{/queryParams}}
+        {{#bodyParams}}// validate the input by constructing a SwaggerModel
+        $swaggerModel = new App\Swagger\Models\Content(json_decode($request->getContent(), true));{{/bodyParams}}
+
+        throw new \Exception("Not Implemented: {{httpMethod}} for '{{path}}'");
+        // return examples
+        {{#responses}}
+        // HTTP status code: {{code}}
+        // {{message}}
+        // return new {{modelPackage}}\{{dataType}}();
+        {{/responses}}
+        // Perhaps you'd like to consider a Lumen Controller to handle this request?
+        // $app->{{httpMethod}}('{{path}}', 'XYZController@{{nickname}}');
+    }
+);
+            {{/operation}}
+        {{/operations}}
+    {{/apis}}
+{{/apiInfo}}
