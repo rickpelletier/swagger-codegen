@@ -17,6 +17,7 @@ public class CodegenResponse {
     public Boolean isListContainer;
     public Object schema;
     public String jsonSchema;
+    public String description;
 
     public boolean isWildcard() {
         return "0".equals(code) || "default".equals(code);

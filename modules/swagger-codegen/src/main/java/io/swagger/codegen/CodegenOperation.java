@@ -14,7 +14,7 @@ public class CodegenOperation {
             returnSimpleType, subresourceOperation, isMapContainer, isListContainer,
             hasMore = Boolean.TRUE, isMultipart;
     public String path, operationId, returnType, httpMethod, returnBaseType,
-            returnContainer, summary, notes, baseName, defaultResponse;
+            returnContainer, summary, notes, baseName, defaultResponse, description;
     public List<Map<String, String>> consumes, produces;
     public CodegenParameter bodyParam;
     public List<CodegenParameter> allParams = new ArrayList<CodegenParameter>();
