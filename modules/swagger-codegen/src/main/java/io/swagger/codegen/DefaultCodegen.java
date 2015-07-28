@@ -134,7 +134,7 @@ public class DefaultCodegen {
             input = input.trim();
             String output = input.replaceAll("\n", "\\\\n");
             output = output.replace("\"", "\\\"");
-            return output;
+            return output.trim();
         }
         return input;
     }
@@ -549,6 +549,8 @@ public class DefaultCodegen {
             ArrayProperty arrayProperty = new ArrayProperty(am.getItems());
             m.hasEnums = false; // Otherwise there will be a NullPointerException in JavaClientCodegen.fromModel
             addParentContainer(m, name, arrayProperty);
+            
+            
         } else if (model instanceof RefModel) {
             // TODO
         } else if (model instanceof ComposedModel) {
@@ -642,6 +644,7 @@ public class DefaultCodegen {
         property.example = p.getExample();
         property.defaultValue = toDefaultValue(p);
         property.jsonSchema = Json.pretty(p);
+        property.required = p.getRequired();
 
         String type = getSwaggerType(p);
         if (p instanceof AbstractNumericProperty) {
@@ -777,7 +780,7 @@ public class DefaultCodegen {
             }
         }
         property.datatype = getTypeDeclaration(p);
-
+        
         // this can cause issues for clients which don't support enums
         if (property.isEnum) {
             property.datatypeWithEnum = toEnumName(property);
@@ -887,6 +890,8 @@ public class DefaultCodegen {
         op.summary = escapeText(operation.getSummary());
         op.notes = escapeText(operation.getDescription());
         op.tags = operation.getTags();
+        op.description = escapeText(operation.getDescription());
+        
 
         if (operation.getConsumes() != null && operation.getConsumes().size() > 0) {
             List<Map<String, String>> c = new ArrayList<Map<String, String>>();
