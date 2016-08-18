@@ -31,7 +31,7 @@ namespace {{modelPackage}};
  */
 class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^isCollection}}extends BaseModel{{/isCollection}}
 {
-    {{#isCollection}}protected $itemType = '{{modelPackage}}\{{itemType}}';{{/isCollection}}{{#vars}}
+{{#isCollection}}    protected $itemType = '{{modelPackage}}\{{itemType}}';{{/isCollection}}{{#vars}}
     /**
       * ${{baseName}}{{#description}}{{{description}}}{{/description}}
       * @var {{datatype}}
@@ -74,7 +74,7 @@ class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^
         {{/hasMore}}{{/vars}}
         {{^isCollection}}//check for validation errors
         if ($this->validationErrors->count() > 0) {
-            throw new \Exception("Invalid data");
+            throw new \Exception("Invalid data : ".print_r($data, true) .PHP_EOL.print_r($this->validationErrors, true));
         }{{/isCollection}}
         return $this;
     }{{#vars}}

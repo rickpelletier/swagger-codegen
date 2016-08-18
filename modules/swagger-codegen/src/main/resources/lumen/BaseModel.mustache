@@ -124,6 +124,7 @@ class BaseModel implements JsonSerializable, Arrayable
                 return is_integer($value);
             break;
             case "double":
+                $value += 0.0;
                 return is_double($value);
             break;
             case "float":
