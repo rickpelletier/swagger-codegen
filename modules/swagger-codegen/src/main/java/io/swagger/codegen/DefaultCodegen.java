@@ -1553,6 +1553,10 @@ public class DefaultCodegen {
         property.defaultValue = toDefaultValue(p);
         property.defaultValueWithParam = toDefaultValueWithParam(name, p);
         property.jsonSchema = Json.pretty(p);
+
+        // @TODO determine if this is needed?
+        property.required = p.getRequired();        
+        
         if (p.getReadOnly() != null) {
             property.isReadOnly = p.getReadOnly();
         }
@@ -2033,6 +2037,7 @@ public class DefaultCodegen {
         op.path = path;
         op.operationId = toOperationId(operationId);
         op.summary = escapeText(operation.getSummary());
+        op.description = escapeText(operation.getDescription());
         op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
         op.hasConsumes = false;

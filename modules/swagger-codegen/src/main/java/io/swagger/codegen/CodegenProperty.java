@@ -41,7 +41,8 @@ public class CodegenProperty implements Cloneable {
     public boolean isPrimitiveType, isContainer, isNotContainer;
     public boolean isString, isNumeric, isInteger, isLong, isNumber, isFloat, isDouble, isByteArray, isBinary, isFile, isBoolean, isDate, isDateTime, isUuid;
     public boolean isListContainer, isMapContainer;
-    public boolean isEnum;
+    // @TODO determine if isArray can be replaced with existing properties (isListContainer, isMapContainer?)
+    public boolean isEnum, isArray;
     public boolean isReadOnly = false;
     public List<String> _enum;
     public Map<String, Object> allowableValues;

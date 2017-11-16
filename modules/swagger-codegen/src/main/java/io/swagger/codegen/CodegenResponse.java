@@ -21,6 +21,7 @@ public class CodegenResponse {
     public boolean isFile = false;
     public Object schema;
     public String jsonSchema;
+    public String description;
     public Map<String, Object> vendorExtensions;
 
     public boolean isWildcard() {

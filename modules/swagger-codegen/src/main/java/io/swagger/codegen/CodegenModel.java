@@ -18,7 +18,8 @@ public class CodegenModel {
     public List<CodegenModel> interfaceModels;
     public List<CodegenModel> children;
 
-    public String name, classname, title, description, classVarName, modelJson, dataType, xmlPrefix, xmlNamespace, xmlName;
+    // @TODO determine if itemType can be replaced with arrayModelType
+    public String name, classname, title, description, classVarName, modelJson, dataType, xmlPrefix, xmlNamespace, xmlName, itemType;
     public String classFilename; // store the class file name, mainly used for import
     public String unescapedDescription;
     public String discriminator;
@@ -39,7 +40,8 @@ public class CodegenModel {
     public Set<String> allMandatory;
 
     public Set<String> imports = new TreeSet<String>();
-    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, hasOptional, isArrayModel, hasChildren;
+    // @TODO Determine if isCollection can be replaced with isArrayModel
+    public boolean hasVars, emptyVars, hasMoreModels, hasEnums, isEnum, hasRequired, hasOptional, isArrayModel, hasChildren, isCollection;
     public boolean hasOnlyReadOnly = true; // true if all properties are read-only
     public ExternalDocs externalDocs;
 
