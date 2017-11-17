@@ -1,12 +1,13 @@
 <?php
 /**
- * BaseModel
+ * Model
  *
  * PHP version 5
  *
  * @category Class
  * @package  {{invokerPackage}}
  * @author   Display Name <richard.p@irokopartners.com>
+ * @description Base model class
  * @license  http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link     https://github.com/swagger-api/swagger-codegen
  *
@@ -15,7 +16,7 @@
  * Do not edit the class manually.
  */
 
-namespace {{modelPackage}};
+namespace {{invokerPackage}}\{{modelPackage}};
 
 use Carbon\Carbon;
 use \JsonSerializable;
@@ -23,7 +24,7 @@ use \Illuminate\Contracts\Support\Arrayable;
 use \Illuminate\Support\MessageBag;
 
 /**
- * BaseModel Class Doc Comment
+ * Model Class Doc Comment
  *
  * @category    Class
  * @description Concrete implementation of JsonSerializable Model
@@ -32,7 +33,7 @@ use \Illuminate\Support\MessageBag;
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class BaseModel implements JsonSerializable, Arrayable
+class Model implements JsonSerializable, Arrayable
 {
     protected $validationErrors;
 

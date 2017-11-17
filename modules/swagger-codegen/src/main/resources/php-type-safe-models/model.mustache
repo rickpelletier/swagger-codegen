@@ -17,7 +17,7 @@
  * Do not edit the class manually.
  */
 
-namespace {{modelPackage}};
+namespace {{invokerPackage}}\{{modelPackage}};
 
 /**
  * {{classname}} Class Doc Comment
@@ -29,13 +29,13 @@ namespace {{modelPackage}};
  * @license     http://www.apache.org/licenses/LICENSE-2.0 Apache Licene v2
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^isCollection}}extends BaseModel{{/isCollection}}
+class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^isCollection}}extends Model{{/isCollection}}
 {
-    {{#isCollection}}protected $itemType = '{{modelPackage}}\{{itemType}}';{{/isCollection}}{{#vars}}
+{{#isCollection}}    protected $itemType = '\{{invokerPackage}}\{{modelPackage}}\{{itemType}}';{{/isCollection}}{{#vars}}
     /**
-      * ${{baseName}}{{#description}}{{{description}}}{{/description}}
-      * @var {{datatype}}
-      */
+     * ${{baseName}}{{#description}}{{{description}}}{{/description}}
+     * @var {{baseType}}
+     */
     protected ${{baseName}};{{/vars}}
     
     /**
@@ -54,7 +54,7 @@ class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^
             }
         }
         {{#isCollection}}$this->setItems($data);{{/isCollection}}{{#vars}}if (array_key_exists("{{baseName}}", $data)) {
-            {{^isPrimitiveType}}{{^isDateTime}}{{^isArray}}$obj = new {{datatype}}();
+            {{^isPrimitiveType}}{{^isDateTime}}{{^isArray}}$obj = new {{baseType}}();
             $obj->load($data["{{baseName}}"]);{{/isArray}}{{/isDateTime}}{{#isDateTime}}$obj = $this->createDateTime("{{baseName}}", $data);
             if ($obj == null) {
                 $this->validationErrors->add(
@@ -74,14 +74,14 @@ class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^
         {{/hasMore}}{{/vars}}
         {{^isCollection}}//check for validation errors
         if ($this->validationErrors->count() > 0) {
-            throw new \Exception("Invalid data");
+            throw new \Exception("Invalid data : ".print_r($data, true) .PHP_EOL.print_r($this->validationErrors, true));
         }{{/isCollection}}
         return $this;
     }{{#vars}}
 
     /**
      * Gets {{baseName}}
-     * @return {{datatype}}
+     * @return {{baseType}}
      */
     public function {{getter}}()
     {
@@ -90,12 +90,12 @@ class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^
   
     /**
      * Sets {{baseName}}
-     * @param {{datatype}} ${{baseName}}{{#description}}{{{description}}}{{/description}}
+     * @param {{baseType}} ${{baseName}}{{#description}}{{{description}}}{{/description}}
      * @return $this
      */
-    public function {{setter}}({{^isPrimitiveType}}{{^isArray}}{{datatype}} {{/isArray}}{{/isPrimitiveType}}${{baseName}})
+    public function {{setter}}({{^isPrimitiveType}}{{^isArray}}{{baseType}} {{/isArray}}{{/isPrimitiveType}}${{baseName}})
     {
-        {{#isPrimitiveType}}if ($this->isValid(${{baseName}}, "{{datatype}}")) {
+        {{#isPrimitiveType}}if ($this->isValid(${{baseName}}, "{{baseType}}")) {
             {{#isEnum}}$allowed_values = array({{#allowableValues}}{{#values}}"{{{this}}}"{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}});
             if (!in_array(${{{baseName}}}, $allowed_values)) {
                 $this->validationErrors->add(
@@ -103,12 +103,12 @@ class {{classname}} {{#isCollection}}extends ModelCollection{{/isCollection}}{{^
                     "Must be one of {{#allowableValues}}{{#values}}'{{{this}}}'{{^-last}}, {{/-last}}{{/values}}{{/allowableValues}}"
                 );
             } else {
-            {{/isEnum}}    $this->{{baseName}} = ${{baseName}};{{#isEnum}}
+            {{/isEnum}}$this->{{baseName}} = ${{baseName}};{{#isEnum}}
             }{{/isEnum}}
         } else {
             $this->validationErrors->add(
                 "{{baseName}}",
-                "Must be of type {{datatype}}"
+                "Must be of type {{baseType}}"
             );
         }{{/isPrimitiveType}}{{^isPrimitiveType}}$this->{{baseName}} = ${{baseName}};{{/isPrimitiveType}}
         return $this;
